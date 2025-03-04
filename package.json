@@ -1,4 +1,23 @@
 {
+  "name": "sinauo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "npm run --watch ap.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kosalaprasetya/sinauo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kosalaprasetya/sinauo/issues"
+  },
+  "homepage": "https://github.com/kosalaprasetya/sinauo#readme",
+  "description": "",
   "devDependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.2",
