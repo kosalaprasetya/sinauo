@@ -1,1 +1,1 @@
-npx sequelize model:generate --name User --attributes name:string
+npx sequelize model:generate --name User --attributes name:string,email:string,password:string,profilePicture:string,bio:string,role:string
