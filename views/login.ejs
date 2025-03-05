@@ -14,8 +14,12 @@
             <H5 style="color: rgb(2, 42, 77); font-family:Arial; justify-content: center; display: flex;">and get your free</H5>
             <H3 style="color: rgb(2, 42, 77); font-family:Arial; justify-content: center; display: flex;">Certification here!!!</H3>
         </div>
-        <div style="height: 66vh; width: 60%; display: inline-block; margin: 0vh 2vh 0 2vh; padding-top: 10vh;" class="flex-fill">
-            <form method="get" action="">
+        <div style="height: 66vh; width: 60%; display: inline-block; margin: 0vh 2vh 0 2vh;" class="flex-fill">
+          <h1 style="color: white;display: flex; justify-content: center; margin-top: 15px;">Welcome</h1>
+          <% if (errors) { %>
+           <p style="color: red; font-weight: 500; display: flex; justify-content: center; margin-top: 20px;"><%= errors %></p>
+          <% } %>
+            <form method="post" action="/", style="padding-top: 5px">
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label" style="color: white;font-family:Arial">Email address</label>
                   <input type="email" class="form-control" style="border-radius: 10px;" name="email" placeholder="Enter Email">
@@ -31,6 +35,10 @@
                 </div> -->
                 <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 30px;">Submit</button>
               </form>
+              <small style="color: white; display: flex; text-align: end; flex-direction: column; margin-top:10px;">
+                <span>Don't have an account yet?</span>
+                <a href="/register"><span style="color: white;">Register Now</span></a>
+              </small>
         </div>
     </div>
     <%- include('_scripts') %>

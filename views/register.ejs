@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SinauO</title>
+  </head>
+  <body style="background-color: rgb(255, 255, 242);">
+    <div style="height: 70vh; width: 120vh; background-color:rgb(40, 40, 40); margin: 15vh 0vh 0vh 50vh; border-radius: 10px; position: relative;">
+        <a href="/"><button class="btn btn-light" style="border-radius: 20px; margin: 8px;"><- Go to Login</button></a>
+        <div style="height: 66vh; margin: 0vh 2vh 0 2vh;" class="flex">
+            <h3 style="color: white; justify-content: center; display: flex;">Register New User</h3>
+            <form method="post" action="/register" style="margin-top: 20px;">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" style="color: white;font-family:Arial">Email address</label>
+                    <input type="email" class="form-control" style="border-radius: 10px;" name="email" placeholder="Enter Email">
+                    <% if (path) { %>
+                        <% let index = path.split(",").findIndex((el) => el === 'email') %>
+                        <small style="color: red;"><%= errors.split(",")[index] %></small>
+                    <% } %>
+                    <small></small>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label" style="color: white;font-family:Arial">Password</label>
+                    <input type="password" class="form-control" style="border-radius: 10px;" name="password" placeholder="Enter Password">
+                    <% if (path) { %>
+                        <% let index = path.split(",").findIndex((el) => el === 'password') %>
+                        <small style="color: red;"><%= errors.split(",")[index] %></small>
+                    <% } %>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label" style="color: white;font-family:Arial">Name</label>
+                    <input type="text" class="form-control" style="border-radius: 10px;" name="name" placeholder="Enter Your Name">
+                    <% if (path) { %>
+                        <% let index = path.split(",").findIndex((el) => el === 'name') %>
+                        <small style="color: red;"><%= errors.split(",")[index] %></small>
+                    <% } %>
+                </div>
+                
+                <button type="submit" class="btn btn-success" style="width: 96.5%; position: absolute; bottom: 10px;">Submit</button>
+            </form>
+        </div>
+    </div>
+    <%- include('_scripts') %>
+  </body>
+</html>
