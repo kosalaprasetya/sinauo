@@ -7,7 +7,15 @@ class Controller {
   static async showHome(req, res) {
     try {
       let role = req.session.userRole;
-
+      const allUserData = await User.findAll({
+        include: {
+          model: UserEnrollment,
+          include: {
+            model: Course,
+          },
+        },
+      });
+      //   res.send(allUserData);
       res.render('home', { role });
     } catch (error) {
       res.send(error);
@@ -64,8 +72,6 @@ class Controller {
         const isValidPw = bcrypt.compareSync(password, data.password);
 
         if (isValidPw) {
-          return res.redirect('/home');
-        } else if (isValidPw) {
           req.session.userId = data.id;
           req.session.userRole = data.role;
 
@@ -84,25 +90,6 @@ class Controller {
     }
   }
 
-  static async home(req, res) {
-    try {
-      //ambil user data, enrollment
-      const allUserData = await User.findAll({
-        include: {
-          model: UserEnrollment,
-          include: {
-            model: Course,
-          },
-        },
-      });
-      const getCourses = await Course.findAll();
-      res.send(allUserData);
-      // res.render('home.ejs')
-    } catch (error) {
-      res.send(error);
-      console.log(error);
-    }
-  }
   static async getLogout(req, res) {
     try {
       req.session.destroy((err) => {

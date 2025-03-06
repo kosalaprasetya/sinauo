@@ -10,12 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       UserEnrollment.belongsTo(models.User);
-      UserEnrollment.hasOne(models.Course);
+      UserEnrollment.belongsTo(models.Course);
     }
   }
   UserEnrollment.init(
     {
-      courseTitle: DataTypes.STRING,
       enrollDate: DataTypes.DATE,
       completeDate: DataTypes.DATE,
       isComplete: DataTypes.BOOLEAN,
