@@ -1,8 +1,21 @@
 const bcrypt = require('bcrypt')
 const {User} = require("../models")
 const session = require('express-session')
+const {Op, where} = require('sequelize')
 
 class Controller {
+
+    static async showHome(req,res){
+        try{
+            let role = req.session.userRole
+
+            res.render('home', {role})
+        }
+        catch (error){
+            res.send(error)
+        }
+    }
+
     static async showRegister(req,res){
         try{
             let {errors, path} = req.query
@@ -89,6 +102,115 @@ class Controller {
                     res.redirect('/')
                 }
             })
+        }
+        catch (error){
+            res.send(error)
+        }
+    }
+
+    static async studentList(req,res){
+        try{
+            let {name} = req.query
+            let role = req.session.userRole
+            let data = await User.findAll({
+                where: {
+                    role: {
+                        [Op.ne] : 'admin'
+                    }
+                },
+                order: [['id', 'ASC']]
+            })
+            data = data.map(el=> el.dataValues)
+            res.render('manageStudent', {role, data, name})
+        }
+        catch (error){
+            res.send(error)
+        }
+    }
+
+    static async addStudent(req,res){
+        try{
+            let{errors, path} = req.query
+            let role = req.session.userRole
+            res.render('addStudents', {role, errors, path})
+        }
+        catch(error){
+            res.send(error)
+        }
+    }
+
+    static async postStudent(req,res){
+        try{
+            await User.create(req.body)
+
+            res.redirect('/home/manage/')
+        }
+        catch(error){
+            if(error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError'){
+                let path = error.errors.map(el=> el.path)
+                let message = error.errors.map(el=> el.message)
+
+                res.redirect(`/home/manage/addStudent?errors=${message}&path=${path}`)
+            }
+            else{
+                console.log(error)
+                res.send(error)
+            }
+        }
+    }
+
+    static async editStudent(req,res){
+        try{
+            let{errors, path} = req.query
+            let {id} = req.params
+            let role = req.session.userRole
+            let student = await User.findByPk(+id)
+
+            res.render('editStudent', {student, role, errors, path})
+        }
+        catch(error){
+            res.send(error)
+        }
+    }
+
+    static async postEditStudent(req,res){
+        try{
+            let{id} = req.params
+            await User.update(req.body, {
+                where: {
+                    id: +id
+                }
+            })
+            res.redirect('/home/manage')
+        }
+        catch(error){
+            let {id} = req.params
+            if(error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError'){
+                let path = error.errors.map(el=> el.path)
+                let message = error.errors.map(el=> el.message)
+
+                res.redirect(`/home/manage/edit/${id}?errors=${message}&path=${path}`)
+            }
+            else{
+                res.send(error)
+            }
+        }
+    }
+
+    static async deleteUser(req,res){
+        try{
+            let {id} = req.params
+            let role = req.session.userRole
+
+            let user = await User.findByPk(+id)
+            let name = user.name
+            await User.destroy({
+                where : {
+                    id: +id
+                }
+            })
+
+            res.redirect(`/home/manage?name=${name}`)
         }
         catch (error){
             res.send(error)
