@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const Helper = require('../helper/index.js');
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
     /**
@@ -10,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Course.belongsTo(models.UserEnrollment);
+    }
+
+    get coursePrice() {
+      return Helper.currencyRupiah(this.price);
     }
   }
   Course.init(
@@ -22,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Course',
+    },
+    {
+      hooks: {
+        beforeCreate(instance, option) {
+          instance.enrollmentCount = 10;
+        },
+      },
     }
   );
   return Course;
