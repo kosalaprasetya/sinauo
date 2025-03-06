@@ -1,1 +1,3 @@
 npx sequelize model:generate --name User --attributes name:string,email:string,password:string,profilePicture:string,bio:string,role:string
+
+npx sequelize model:generate --name Payment --attributes amount:integer,paymentStatus:string,UserId:integer,status:string
