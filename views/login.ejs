@@ -1,37 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
     <title>SinauO</title>
   </head>
-  <body style="background-color: rgb(255, 255, 242);">
-    <div style="height: 70vh; width: 120vh; background-color:rgb(40, 40, 40); margin: 15vh 0vh 0vh 50vh; padding-top: 2vh; border-radius: 10px;" class="d-flex">
-        <div style="height: 66vh; width: 40%; background-color: rgb(255, 255, 255); margin-left: 2vh; padding-top:2vh; border-radius: 8px;" class="flex-fill">
-            <img src="/image/logo.png" style="height: 30vh; width: 30vh; justify-items: center; margin-left: 17%; margin-top: 5%;">
+  <body style="background-color: rgb(255, 255, 242)">
+    <div
+      style="height: 70vh; width: 120vh; background-color: rgb(40, 40, 40); margin: 15vh 0vh 0vh 50vh; padding-top: 2vh; border-radius: 10px"
+      class="d-flex"
+    >
+      <div
+        style="height: 66vh; width: 40%; background-color: rgb(255, 255, 255); margin-left: 2vh; padding-top: 2vh; border-radius: 8px"
+        class="flex-fill"
+      >
+        <img
+          src="/image/logo.png"
+          style="height: 30vh; width: 30vh; justify-items: center; margin-left: 17%; margin-top: 5%"
+        />
 
-            <H3 style="color: rgb(2, 42, 77); font-family:Arial; margin-top: 50px; justify-content: center; display: flex;">Learn with Us Now</H3>
-            <H5 style="color: rgb(2, 42, 77); font-family:Arial; justify-content: center; display: flex;">and get your free</H5>
-            <H3 style="color: rgb(2, 42, 77); font-family:Arial; justify-content: center; display: flex;">Certification here!!!</H3>
-        </div>
-        <div style="height: 66vh; width: 60%; display: inline-block; margin: 0vh 2vh 0 2vh; padding-top: 10vh;" class="flex-fill">
-            <form method="get" action="">
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label" style="color: white;font-family:Arial">Email address</label>
-                  <input type="email" class="form-control" style="border-radius: 10px;" name="email" placeholder="Enter Email">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label" style="color: white;font-family:Arial">Password</label>
-                  <input type="password" class="form-control" style="border-radius: 10px;" name="password" placeholder="Enter Password">
-                </div>
-                <!-- ini klo mau next pake remember me, klo ga mau apus aja wkakka
+        <H3 style="color: rgb(2, 42, 77); font-family: Arial; margin-top: 50px; justify-content: center; display: flex">Learn with Us Now</H3>
+        <H5 style="color: rgb(2, 42, 77); font-family: Arial; justify-content: center; display: flex">and get your free</H5>
+        <H3 style="color: rgb(2, 42, 77); font-family: Arial; justify-content: center; display: flex">Certification here!!!</H3>
+      </div>
+      <div
+        style="height: 66vh; width: 60%; display: inline-block; margin: 0vh 2vh 0 2vh; padding-top: 10vh"
+        class="flex-fill"
+      >
+        <form
+          method="get"
+          action="/home"
+        >
+          <div class="mb-3">
+            <label
+              for="exampleInputEmail1"
+              class="form-label"
+              style="color: white; font-family: Arial"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              style="border-radius: 10px"
+              name="email"
+              placeholder="Enter Email"
+            />
+          </div>
+          <div class="mb-3">
+            <label
+              for="exampleInputPassword1"
+              class="form-label"
+              style="color: white; font-family: Arial"
+              >Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              style="border-radius: 10px"
+              name="password"
+              placeholder="Enter Password"
+            />
+          </div>
+          <!-- ini klo mau next pake remember me, klo ga mau apus aja wkakka
                 <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="exampleCheck1">
                   <label class="form-check-label" for="exampleCheck1">Check me out</label>
                 </div> -->
-                <button type="submit" class="btn btn-success" style="width: 100%; margin-top: 30px;">Submit</button>
-              </form>
-        </div>
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="width: 100%; margin-top: 30px"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
     <%- include('_scripts') %>
   </body>
