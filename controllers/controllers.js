@@ -7,10 +7,7 @@ class Controller {
   static async showHome(req, res) {
     try {
       let role = req.session.userRole;
-      let userData = await User.findByPk(req.session.userId)
-      userData = userData.dataValues
-      console.log(userData)
-      const allUserData = await User.findAll({
+      let userData = await User.findByPk(req.session.userId, {
         include: {
           model: UserEnrollment,
           include: {
@@ -18,8 +15,38 @@ class Controller {
           },
         },
       });
-      //   res.send(allUserData);
-      res.render('home', { role });
+      userData = userData.dataValues;
+      const courses = await Course.findAll();
+      res.render('home', { role, userData, courses });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async courseDetail(req, res) {
+    try {
+      let role = req.session.userRole;
+      const { id: courseId } = req.params;
+      let userData = await User.findByPk(req.session.userId, {
+        include: {
+          model: UserEnrollment,
+          include: {
+            model: Course,
+            where: {
+              id: courseId,
+            },
+          },
+        },
+      });
+      let course = await Course.findByPk(courseId);
+      res.render('courseDetail', { role, course, userData });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async buyCourse(req, res) {
+    try {
     } catch (error) {
       res.send(error);
     }
@@ -220,7 +247,7 @@ class Controller {
 
   static async postInstructor(req, res) {
     try {
-      req.body.role = 'instructor'
+      req.body.role = 'instructor';
       await User.create(req.body);
 
       res.redirect('/home/manage/');
@@ -291,15 +318,14 @@ class Controller {
     }
   }
 
-  static async showProfile(req,res){
-    try{
-      let role = req.session.userRole
-      let data = await User.findByPk(req.session.userId)
-      data = data.dataValues
-      res.render('Profile', {data, role})
-    }
-    catch (error){
-      res.send(error)
+  static async showProfile(req, res) {
+    try {
+      let role = req.session.userRole;
+      let data = await User.findByPk(req.session.userId);
+      data = data.dataValues;
+      res.render('Profile', { data, role });
+    } catch (error) {
+      res.send(error);
     }
   }
 }
