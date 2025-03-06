@@ -1,0 +1,74 @@
+[
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 1,
+    "CourseId": 1
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 2,
+    "CourseId": 1
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 3,
+    "CourseId": 1
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 3,
+    "CourseId": 2
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 2,
+    "CourseId": 3
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 2,
+    "CourseId": 4
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 2,
+    "CourseId": 5
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 2,
+    "CourseId": 6
+  },
+  {
+    "enrollDate": "2024-03-21",
+    "completeDate": null,
+    "isComplete": false,
+    "paymentStatus": "success",
+    "UserId": 3,
+    "CourseId": 6
+  }
+]
