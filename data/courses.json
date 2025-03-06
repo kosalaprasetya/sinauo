@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Teknik Pengurasan Jeding",
+    "description": "Kursus online tentang cara menguras jeding dengan baik dan benar",
+    "price": 150000,
+    "enrollmentCount": 30
+  },
+  {
+    "title": "Teknik Menanak Nasi",
+    "description": "Kursus online tentang cara menanak nasi dengan baik dan benar",
+    "price": 170000,
+    "enrollmentCount": 37
+  },
+  {
+    "title": "Teknik Menyapu",
+    "description": "Kursus online tentang cara menyapu dengan baik dan benar",
+    "price": 125000,
+    "enrollmentCount": 33
+  },
+  {
+    "title": "Front End Development",
+    "description": "Kursus online front end development terlengkap di internet",
+    "price": 950000,
+    "enrollmentCount": 70
+  },
+  {
+    "title": "Back End Development",
+    "description": "Kursus online Back End Development terlengkap di indonesia",
+    "price": 1200000,
+    "enrollmentCount": 90
+  },
+  {
+    "title": "Pengantar Pemrograman Web",
+    "description": "Kursus online pengantar pemrograman web, materi wajib sebelum mengikuti course front end dan back end",
+    "price": 350000,
+    "enrollmentCount": 100
+  }
+]

@@ -1,92 +1,146 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
     <title>SinauO</title>
   </head>
   <body>
     <%- include('_navbar') %>
-    <div style="padding-top: 10vh; background-color: antiquewhite; width: 100%; height: 35vh; ">
-        <h1 style="display: flex; text-align: center; flex-direction: column;">
-            <span style="font-family: Arial, Helvetica, sans-serif;">Hello, name!</span>
-            <br>
-            <span style="font-family: Arial, Helvetica, sans-serif;">What do you want to learn today?</span>
-        </h1>
+    <div style="padding-top: 10vh; background-color: antiquewhite; width: 100%; height: 35vh">
+      <h1 style="display: flex; text-align: center; flex-direction: column">
+        <span style="font-family: Arial, Helvetica, sans-serif">Hello, <%= userData.name %></span>
+        <br />
+        <span style="font-family: Arial, Helvetica, sans-serif">What do you want to learn today?</span>
+      </h1>
     </div>
-    <div style="overflow-y: hidden auto; height: 100vh; margin-top: 30px;margin-left: 50pt;" class="container">
-      <h3 style="font-family: Arial, Helvetica, sans-serif;">Learn new skills with SinauO</h3>
-      <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(37, 37, 37);">SinauO serving all kind of courses from cleaning, to building a Mega Corporation!</p>
+    <div
+      style="overflow-y: hidden auto; height: 100vh; margin-top: 30px; margin-left: 50pt"
+      class="container"
+    >
+      <h3 style="font-family: Arial, Helvetica, sans-serif">Learn new skills with SinauO</h3>
+      <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(37, 37, 37)">SinauO serving all kind of courses from cleaning, to building a Mega Corporation!</p>
       <%- include('_scrollCSS') %>
-      <nav class="nav-bar d-flex gap-3 py-3" style="overflow-x: auto; white-space: nowrap; justify-content: center;">
-        <a href="#"><button class="btn btn-outline-primary" style="border-radius: 20px;">Category 1</button></a>
-        <a href="#"><button class="btn btn-outline-primary" style="border-radius: 20px;">Category 2</button></a>
-        <a href="#"><button class="btn btn-outline-primary" style="border-radius: 20px;">Category 3</button></a>
-        <a href="#"><button class="btn btn-outline-primary" style="border-radius: 20px;">Category 4</button></a>
-        <a href="#"><button class="btn btn-outline-primary" style="border-radius: 20px;">Category 5</button></a>
+      <nav
+        class="nav-bar d-flex gap-3 py-3"
+        style="overflow-x: auto; white-space: nowrap; justify-content: center"
+      >
+        <a href="#"
+          ><button
+            class="btn btn-outline-primary"
+            style="border-radius: 20px"
+          >
+            Category 1
+          </button></a
+        >
+        <a href="#"
+          ><button
+            class="btn btn-outline-primary"
+            style="border-radius: 20px"
+          >
+            Category 2
+          </button></a
+        >
+        <a href="#"
+          ><button
+            class="btn btn-outline-primary"
+            style="border-radius: 20px"
+          >
+            Category 3
+          </button></a
+        >
+        <a href="#"
+          ><button
+            class="btn btn-outline-primary"
+            style="border-radius: 20px"
+          >
+            Category 4
+          </button></a
+        >
+        <a href="#"
+          ><button
+            class="btn btn-outline-primary"
+            style="border-radius: 20px"
+          >
+            Category 5
+          </button></a
+        >
       </nav>
 
-      
-      
-      <div class="container" style="display: flex; margin-left: 5vh;">
-        <div class="container" style="margin-top: 80px;display: flex; flex-wrap: wrap; justify-content: flex-start;">
+      <h4>My Courses</h4>
+      <div
+        class="container"
+        style="display: flex; margin-left: 5vh"
+      >
+        <div
+          class="container"
+          style="margin-top: 80px; display: flex; flex-wrap: wrap; justify-content: flex-start"
+        >
           <!-- ejs -->
-           <a href="" style="text-decoration: none;">
-            <div class="card" style="width: 18rem; height: 23.5rem  ;margin-left: 20px; margin-bottom: 20px;">
-              <img src="/image/courseImg.png" class="card-img-top" alt="..." style="border-bottom: solid 0.5px;">
+          <% userData.UserEnrollments.forEach(element => { %>
+          <a
+            href="/courses/detail/<%= element.dataValues.Course.id %>"
+            style="text-decoration: none"
+          >
+            <div
+              class="card"
+              style="width: 18rem; height: 23.5rem; margin-left: 20px; margin-bottom: 20px"
+            >
+              <img
+                src="/image/courseImg.png"
+                class="card-img-top"
+                alt="..."
+                style="border-bottom: solid 0.5px"
+              />
               <div class="card-body">
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Course title goes here example of second line</h5>
-                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88);">This is Instructor name</p> <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px;">Rp. 1.000.000</h5>
-                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px;">Enrollment count goes here</small>
+                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold"><%= element.dataValues.Course.title %></h5>
+                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88); font-size: 0.8rem"><%= element.dataValues.Course.description %></p>
+                <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
+                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px"><%= element.dataValues.Course.coursePrice %></h5>
+                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px; position: absolute">Enrolled</small>
               </div>
             </div>
-           </a>
-           <a href="" style="text-decoration: none;">
-            <div class="card" style="width: 18rem; height: 23.5rem  ;margin-left: 20px; margin-bottom: 20px;">
-              <img src="/image/courseImg.png" class="card-img-top" alt="..." style="border-bottom: solid 0.5px;">
+          </a>
+          <% }) %>
+        </div>
+      </div>
+      <h4>All Courses</h4>
+      <div
+        class="container"
+        style="display: flex; margin-left: 5vh"
+      >
+        <div
+          class="container"
+          style="margin-top: 80px; display: flex; flex-wrap: wrap; justify-content: flex-start"
+        >
+          <!-- ejs -->
+          <% courses.forEach(element => { %>
+          <a
+            href="/courses/detail/<%= element.id %>"
+            style="text-decoration: none"
+          >
+            <div
+              class="card"
+              style="width: 18rem; height: 23.5rem; margin-left: 20px; margin-bottom: 20px"
+            >
+              <img
+                src="/image/courseImg.png"
+                class="card-img-top"
+                alt="..."
+                style="border-bottom: solid 0.5px"
+              />
               <div class="card-body">
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Course title goes here example of second line a third line</h5> <!-- mungkin batasi title sampai 50 karakter maks biar ga keluar content-->
-                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88);">This is Instructor name</p> <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px;">Rp. 1.000.000</h5>
-                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px;">Enrollment count goes here</small>
+                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold"><%= element .title %></h5>
+                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88); font-size: 0.8rem"><%= element .description %></p>
+                <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
+                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px"><%= element .coursePrice %></h5>
               </div>
             </div>
-           </a>
-           <a href="" style="text-decoration: none;">
-            <div class="card" style="width: 18rem; height: 23.5rem  ;margin-left: 20px; margin-bottom: 20px;">
-              <img src="/image/courseImg.png" class="card-img-top" alt="..." style="border-bottom: solid 0.5px;">
-              <div class="card-body">
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Course title goes here example of second line</h5>
-                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88);">This is Instructor name</p> <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px;">Rp. 1.000.000</h5>
-                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px;">Enrollment count goes here</small>
-              </div>
-            </div>
-           </a>
-           <a href="" style="text-decoration: none;">
-            <div class="card" style="width: 18rem; height: 23.5rem  ;margin-left: 20px; margin-bottom: 20px;">
-              <img src="/image/courseImg.png" class="card-img-top" alt="..." style="border-bottom: solid 0.5px;">
-              <div class="card-body">
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Course title goes here example of second line</h5>
-                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88);">This is Instructor name</p> <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px;">Rp. 1.000.000</h5>
-                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px;">Enrollment count goes here</small>
-              </div>
-            </div>
-           </a>
-           <a href="" style="text-decoration: none;">
-            <div class="card" style="width: 18rem; height: 23.5rem  ;margin-left: 20px; margin-bottom: 20px;">
-              <img src="/image/courseImg.png" class="card-img-top" alt="..." style="border-bottom: solid 0.5px;">
-              <div class="card-body">
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold;">Course title goes here example of second line</h5>
-                <p style="font-family: Arial, Helvetica, sans-serif; color: rgb(88, 88, 88);">This is Instructor name</p> <!--kalo kesusahan hapus aja ga apa soalnya include dalam include ini :')-->
-                <h5 style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; margin-top: 20px;">Rp. 1.000.000</h5>
-                <small style="font-family: Arial, Helvetica, sans-serif; color: rgb(114, 114, 114); float: right; margin-top: 30px;">Enrollment count goes here</small>
-              </div>
-            </div>
-           </a>
-
+          </a>
+          <% }) %>
         </div>
       </div>
     </div>

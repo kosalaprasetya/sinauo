@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SinauO</title>
+  </head>
+  <body style="background-color: rgb(255, 255, 242);">
+    <%- include('_navbar') %>
+    <div class="container" style="margin-top: 50px;margin-bottom: 100px;">
+        <h1 style="display: flex; justify-content: center;">List Users</h1>
+        <% if (name) { %>
+         <p style="color: red; display: flex; justify-content: center;">User with name: <%= name %> has been deleted successfully</p>
+        <% } %>
+        <a href="/home/manage/addStudent"><button class="btn btn-primary" style="margin-top: 50px; margin-bottom: 20px;">Add new Student</button></a> 
+        <% if (role === 'admin') { %>
+        <a href="/home/manage/addInstructor"><button class="btn btn-primary" style="margin-top: 50px; margin-bottom: 20px;">Add new Instructor</button></a>
+        <% } %>
+           
+        <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Profile Picture</th>
+                <th scope="col">Bio</th>
+                <th scope="col">Role</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <% data.forEach(element => { %>
+                <tr>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.name %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.email %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.profilePicture %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.bio %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.role %></td>
+                    <% if (role === 'admin') { %>
+                        <td>
+                            <a href='manage/edit/<%= element.id %>''><button class="btn btn-warning">Edit</button></a>
+                            <a href='/home/manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
+                        </td>
+                    <% } else if (element.role !== 'instructor' && role !== 'admin') { %>
+                        <td>
+                            <a href='manage/edit/<%= element.id %>''><button class="btn btn-warning">Edit</button></a>
+                            <a href='/home/manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
+                        </td>
+                    <% } else{ %>
+                        <td>
+                            You can't edit this role
+                        </td>
+                     <%}%>
+                  </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <%- include('_scripts') %>
+  </body>
+</html>

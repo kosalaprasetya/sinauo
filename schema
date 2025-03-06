@@ -1,3 +1,9 @@
 npx sequelize model:generate --name User --attributes name:string,email:string,password:string,profilePicture:string,bio:string,role:string
 
-npx sequelize model:generate --name Payment --attributes amount:integer,paymentStatus:string,UserId:integer,status:string
+npx sequelize model:generate --name UserEnrollment --attributes courseTitle:string,enrollDate:date,completeDate:date,isComplete:boolean,paymentStatus:string,UserId:integer,CourseId:integer
+
+npx sequelize model:generate --name Course --attributes title:string,description:string,price:integer,enrollmentCount:string
+
+npx sequelize model:generate --name CourseCategory --attributes CourseId:integer,CategoriesId:integer
+
+npx sequelize model:generate --name Category --attributes name:string,description:string

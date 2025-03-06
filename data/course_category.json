@@ -1,0 +1,26 @@
+[
+  {
+    "CourseId": 1,
+    "CategoryId": 1
+  },
+  {
+    "CourseId": 2,
+    "CategoryId": 1
+  },
+  {
+    "CourseId": 3,
+    "CategoryId": 1
+  },
+  {
+    "CourseId": 4,
+    "CategoryId": 1
+  },
+  {
+    "CourseId": 5,
+    "CategoryId": 1
+  },
+  {
+    "CourseId": 6,
+    "CategoryId": 1
+  }
+]
