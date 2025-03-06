@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>SinauO</title>
+  </head>
+  <body>
+    <%- include('_navbar') %>
+    <div class="container">
+      <h2>Course Detail</h2>
+      <div class="image">
+        <img
+          src="https://foundr.com/wp-content/uploads/2021/09/Best-online-course-platforms.png"
+          alt="<%= course.title %>"
+          width="400"
+        />
+      </div>
+    </div>
+    <div class="details container">
+      <% if (userData.UserEnrollments.length > 0) { %>
+      <div class="status">
+        <p style="margin: 1rem; font-weight: 500; color: chocolate"><%= 'Anda Sudah terdaftar pada Course ini' %></p>
+      </div>
+      <% } %>
+
+      <h3><%= course.title %></h3>
+      <p><%= course.description %></p>
+      <p>Kuota: <%=course.enrollmentCount %></p>
+      <h4><%= course.coursePrice %></h4>
+      <% if (!userData.UserEnrollments.length > 0) { %>
+      <div class="cta-button">
+        <a
+          class="btn btn-primary"
+          href="/course/buy/<%= course.id %>"
+          ><%= 'Beli Sekarang' %></a
+        >
+      </div>
+      <% } %>
+    </div>
+    <%- include('_scripts') %>
+  </body>
+</html>

@@ -1,1 +1,7 @@
-[{ "name": "Umum", "description": "kategori umum" }]
+[
+    { "name": "Umum", "description": "kategori umum" },
+    { "name": "IT", "description": "kategori IT" },
+    { "name": "Matematika", "description": "kategori Matematika" },
+    { "name": "Science", "description": "kategori Science" },
+    { "name": "Business", "description": "kategori Business" }
+]

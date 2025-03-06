@@ -5,22 +5,22 @@
   },
   {
     "CourseId": 2,
-    "CategoryId": 1
+    "CategoryId": 2
   },
   {
     "CourseId": 3,
-    "CategoryId": 1
+    "CategoryId": 5
   },
   {
     "CourseId": 4,
-    "CategoryId": 1
+    "CategoryId": 2
   },
   {
     "CourseId": 5,
-    "CategoryId": 1
+    "CategoryId": 4
   },
   {
     "CourseId": 6,
-    "CategoryId": 1
+    "CategoryId": 3
   }
 ]

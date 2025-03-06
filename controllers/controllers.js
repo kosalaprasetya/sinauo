@@ -2,15 +2,36 @@ const bcrypt = require('bcrypt');
 const { User, UserEnrollment, Course, CourseCategory, Category } = require('../models/index.js');
 const session = require('express-session');
 const { Op, where } = require('sequelize');
+const nodemailer = require('nodemailer')
+const QRCode = require('qrcode')
 
 class Controller {
   static async showHome(req, res) {
     try {
+      let {filter} = req.query
       let role = req.session.userRole;
-      let userData = await User.findByPk(req.session.userId)
-      userData = userData.dataValues
-      console.log(userData)
-      const allUserData = await User.findAll({
+
+      // let filteredData = await Course.findOne({
+      //   include: {
+      //     model: UserEnrollment,
+      //     include: {
+      //       model: Course,
+      //     },
+      //     where: {
+      //       id: req.session.userId
+      //     }
+      //   }
+        
+      // })
+
+      // console.log(filteredData.UserEnrollment.Course)
+
+      let categoryData = await Category.findAll()
+      categoryData = categoryData.map(el=>el.dataValues)
+      let userData = await User.findOne({
+        where: {
+          id: req.session.userId
+        },
         include: {
           model: UserEnrollment,
           include: {
@@ -18,9 +39,79 @@ class Controller {
           },
         },
       });
-      //   res.send(allUserData);
-      res.render('home', { role });
+
+      const courses = await Course.findAll();
+      res.render('home', { role, userData, categoryData, courses });
     } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async courseDetail(req, res) {
+    try {
+      let role = req.session.userRole;
+      const { id: courseId } = req.params;
+      let userData = await User.findByPk(req.session.userId, {
+        include: {
+          model: UserEnrollment,
+          include: {
+            model: Course,
+            where: {
+              id: courseId,
+            },
+          },
+        },
+      });
+      let course = await Course.findByPk(courseId);
+      res.render('courseDetail', { role, course, userData });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async buyCourse(req, res) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        service: 'gmail',
+        auth: {
+          user: 'bricongaw@gmail.com',  
+          pass: 'robd wzjv wqcx numn',
+        },
+      });
+
+      QRCode.toFile('qrcode.png', 'http://localhost:3001/', function (err) {
+        if (err) {
+          console.error('Error generating QR code:', err);
+        } else {
+          const mailOptions = {
+            from: '"Brandon" <bricongaw@gmail.com>',
+            to: 'bricongaw@gmail.com',
+            subject: 'noreply',
+            text: 'Scan the QR code below to complete your payment',
+            attachments: [
+              {
+                filename: 'qrcode.png',
+                path: './qrcode.png',
+              },
+            ],
+          };
+      
+          // Send email
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log('Error:', error);
+            } else {
+              console.log('Email sent:', info.response);
+            }
+          });
+        }
+      });
+      res.redirect('/home')
+    } 
+    catch (error) {
       res.send(error);
     }
   }
@@ -148,7 +239,6 @@ class Controller {
 
         res.redirect(`/home/manage/addStudent?errors=${message}&path=${path}`);
       } else {
-        console.log(error);
         res.send(error);
       }
     }
@@ -228,7 +318,6 @@ class Controller {
 
         res.redirect(`/home/manage/addInstructor?errors=${message}&path=${path}`);
       } else {
-        console.log(error);
         res.send(error);
       }
     }

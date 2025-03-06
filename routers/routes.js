@@ -21,7 +21,9 @@ router.use((req, res, next) => {
 
 //taruh disini routernya kalo ada jangan dibawah, nanti kena session
 router.get('/home', Controller.showHome);
-router.get('/home/profile', Controller.showProfile)
+router.get('/home/profile', Controller.showProfile);
+router.get('/courses/detail/:id', Controller.courseDetail);
+router.get('/course/buy/:id', Controller.buyCourse);
 
 //cek hanya admin & instructor
 router.use((req, res, next) => {
@@ -38,7 +40,6 @@ router.post('/home/manage/addStudent', Controller.postStudent);
 router.get('/home/manage/edit/:id', Controller.editStudent);
 router.post('/home/manage/edit/:id', Controller.postEditStudent);
 router.get('/home/manage/delete/:id', Controller.deleteUser);
-
 
 //cek hanya admin
 router.use((req, res, next) => {
