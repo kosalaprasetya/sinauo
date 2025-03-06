@@ -7,6 +7,9 @@ class Controller {
   static async showHome(req, res) {
     try {
       let role = req.session.userRole;
+      let userData = await User.findByPk(req.session.userId)
+      userData = userData.dataValues
+      console.log(userData)
       const allUserData = await User.findAll({
         include: {
           model: UserEnrollment,
@@ -202,6 +205,101 @@ class Controller {
       res.redirect(`/home/manage?name=${name}`);
     } catch (error) {
       res.send(error);
+    }
+  }
+
+  static async addInstructor(req, res) {
+    try {
+      let { errors, path } = req.query;
+      let role = req.session.userRole;
+      res.render('addInstructor', { role, errors, path });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async postInstructor(req, res) {
+    try {
+      req.body.role = 'instructor'
+      await User.create(req.body);
+
+      res.redirect('/home/manage/');
+    } catch (error) {
+      if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+        let path = error.errors.map((el) => el.path);
+        let message = error.errors.map((el) => el.message);
+
+        res.redirect(`/home/manage/addInstructor?errors=${message}&path=${path}`);
+      } else {
+        console.log(error);
+        res.send(error);
+      }
+    }
+  }
+
+  static async editInstructor(req, res) {
+    try {
+      let { errors, path } = req.query;
+      let { id } = req.params;
+      let role = req.session.userRole;
+      let instructor = await User.findByPk(+id);
+
+      res.render('editInstructor', { instructor, role, errors, path });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async postEditInstructor(req, res) {
+    try {
+      let { id } = req.params;
+      await User.update(req.body, {
+        where: {
+          id: +id,
+        },
+      });
+      res.redirect('/home/manage');
+    } catch (error) {
+      let { id } = req.params;
+      if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+        let path = error.errors.map((el) => el.path);
+        let message = error.errors.map((el) => el.message);
+
+        res.redirect(`/home/manage/editInstructor/${id}?errors=${message}&path=${path}`);
+      } else {
+        res.send(error);
+      }
+    }
+  }
+
+  static async deleteInstructorr(req, res) {
+    try {
+      let { id } = req.params;
+      let role = req.session.userRole;
+
+      let user = await User.findByPk(+id);
+      let name = user.name;
+      await User.destroy({
+        where: {
+          id: +id,
+        },
+      });
+
+      res.redirect(`/home/manage?name=${name}`);
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async showProfile(req,res){
+    try{
+      let role = req.session.userRole
+      let data = await User.findByPk(req.session.userId)
+      data = data.dataValues
+      res.render('Profile', {data, role})
+    }
+    catch (error){
+      res.send(error)
     }
   }
 }

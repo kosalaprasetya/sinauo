@@ -31,20 +31,20 @@
             <tbody></tbody>
             <% data.forEach(element => { %>
                 <tr>
-                    <td><%= element.name %></td>
-                    <td><%= element.email %></td>
-                    <td><%= element.profilePicture %></td>
-                    <td><%= element.bio %></td>
-                    <td><%= element.role %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.name %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.email %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.profilePicture %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.bio %></td>
+                    <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= element.role %></td>
                     <% if (role === 'admin') { %>
                         <td>
                             <a href='manage/edit/<%= element.id %>''><button class="btn btn-warning">Edit</button></a>
-                            <a href='manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
+                            <a href='/home/manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
                         </td>
                     <% } else if (element.role !== 'instructor' && role !== 'admin') { %>
                         <td>
                             <a href='manage/edit/<%= element.id %>''><button class="btn btn-warning">Edit</button></a>
-                            <a href='manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
+                            <a href='/home/manage/delete/<%= element.id %>''><button class="btn btn-danger">Delete</button></a>
                         </td>
                     <% } else{ %>
                         <td>

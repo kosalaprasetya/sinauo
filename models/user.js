@@ -16,25 +16,43 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty : {
           msg: `Name cannot be empty`
+        },
+        isLessthanthree(value){
+          if(value.length < 3 && value.length > 0){
+            throw new Error(`Name must have 3 character or more!`)
+          }
         }
       }
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty : {
           msg: `Email cannot be empty`
+        },
+        isLessthanthree(value){
+          if(value.length < 3 && value.length > 0){
+            throw new Error(`Email must have 3 character or more!`)
+          }
         }
       }
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty : {
           msg: `Password cannot be empty`
+        },
+        isLessthanthree(value){
+          if(value.length < 3 && value.length > 0){
+            throw new Error(`Password must have 3 character or more!`)
+          }
         }
       }
     },
@@ -52,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       users.role = 'student'
     }
     if(!users.profilePicture){
-      users.profilePicture = 'images/logo.png'
+      users.profilePicture = '../image/logo.png'
     }
     if(!users.bio){
       users.bio = ''
