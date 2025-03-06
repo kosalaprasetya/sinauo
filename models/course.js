@@ -11,10 +11,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Course.belongsTo(models.UserEnrollment);
+      Course.hasMany(models.CourseCategory);
+      Course.belongsToMany(models.Category, { through: models.CourseCategory });
     }
 
     get coursePrice() {
       return Helper.currencyRupiah(this.price);
+    }
+
+    static discount(amount) {
+      const discountPercentage = amount / 100;
+      const discountAmount = this.price * discountPercentage;
+      return this.price - discountAmount;
     }
   }
   Course.init(

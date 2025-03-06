@@ -1,5 +1,6 @@
+
 const bcrypt = require('bcrypt')
-const {User} = require("../models")
+const { User, UserEnrollment, Course, CourseCategory, Category } = require('../models/index.js');
 const session = require('express-session')
 const {Op, where} = require('sequelize')
 
@@ -26,70 +27,93 @@ class Controller {
         }
     }
 
-    static async postRegister(req,res){
-        try{
-            let {name} = req.body
-            await User.create(req.body)
+  static async postRegister(req, res) {
+    try {
+      let { name } = req.body;
+      await User.create(req.body);
 
-            res.redirect('/')
-        }
-        catch (error){
-            if(error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError'){
-                let path = error.errors.map(el=> el.path)
-                let message = error.errors.map(el=> el.message)
+      res.redirect('/');
+    } catch (error) {
+      if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+        let path = error.errors.map((el) => el.path);
+        let message = error.errors.map((el) => el.message);
 
-                res.redirect(`/register?errors=${message}&path=${path}`)
-            }
-            else{
-                res.send(error)
-            }
-        }
+        res.redirect(`/register?errors=${message}&path=${path}`);
+      } else {
+        res.send(error);
+      }
     }
+  }
 
-    static async showLogin(req,res){
-        try{
-            let {errors} = req.query
-            
-            res.render('login', {errors})
+  static async showLogin(req, res) {
+    try {
+      let { errors } = req.query;
+
+      res.render('login', { errors });
+    } catch (error) {
+      res.send(error);
+    }
+  }
+
+  static async postLogin(req, res) {
+    try {
+      const { email, password } = req.body;
+      let data = await User.findOne({
+        where: {
+          email: email,
+        },
+      });
+
+      if (data) {
+        const isValidPw = bcrypt.compareSync(password, data.password);
+
+        if (isValidPw) {
+          return res.redirect('/home');
+        } else if(isValidPw){
+          req.session.userId = data.id
+          req.session.userRole = data.role
+
+          return res.redirect('/home')
+        }
+        else{
+        const error = "Invalid Email / Password" 
+        return res.redirect(`/?errors=${error}`)
+             }
+        } else{
+        req.session.user={}
+        const error = "Invalid Email / Password" 
+        return res.redirect(`/?errors=${error}`)
+        }   
         }
         catch(error){
             res.send(error)
         }
+      } else {
+        const error = 'Invalid Email / Password';
+        return res.redirect(`/?errors=${error}`);
+      }
+    } catch (error) {
+      res.send(error);
     }
+  }
 
-    static async postLogin(req,res){
-        try{
-            const {email, password} = req.body
-            let data = await User.findOne({
-                where: {
-                    email : email
-                }
-            })
-    
-            if(data){
-                const isValidPw = bcrypt.compareSync(password, data.password)
-
-                if(isValidPw){
-                    req.session.userId = data.id
-                    req.session.userRole = data.role
-
-                    return res.redirect('/home')
-                }
-                else{
-                    const error = "Invalid Email / Password" 
-                    return res.redirect(`/?errors=${error}`)
-                }
-            }
-            else{
-                req.session.user={}
-                const error = "Invalid Email / Password" 
-                return res.redirect(`/?errors=${error}`)
-            }
-            
-        }
-        catch(error){
-            res.send(error)
-        }
+  static async home(req, res) {
+    try {
+      //ambil user data, enrollment
+      const allUserData = await User.findAll({
+        include: {
+          model: UserEnrollment,
+          include: {
+            model: Course,
+          },
+        },
+      });
+      const getCourses = await Course.findAll();
+      res.send(allUserData);
+      // res.render('home.ejs')
+    } catch (error) {
+      res.send(error);
+      console.log(error);
     }
 
     static async getLogout(req,res){
