@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SinauO</title>
+  </head>
+  <body style="background-color: rgb(55, 55, 55);">
+    <%- include('_navbar') %>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="<%= data.profilePicture %>" alt="Profile Image">
+            <div>
+                <h1><%= data.name %></h1>
+                <p>Role: <%= data.role %></p>
+            </div>
+        </div>
+
+        <!-- Bio Section -->
+        <div class="info-section">
+            <h2>Bio</h2>
+            <% if (data.bio === '') { %>
+             <p>There is currently nothing here~~~</p>
+            <% } else {%>
+            <p><%= data.bio %></p>
+            <%}%>
+        </div>
+
+        <div class="contact-info">
+            <div>
+                <h3>Email</h3>
+                <a style="text-decoration: none; color: black;" href="mailto:<%= data.email %>"><p><%= data.email %></p></a>
+            </div>
+        </div>
+    </div>
+    <%- include('_profileCSS') %>
+    <%- include('_scripts') %>
+  </body>
+</html>
