@@ -384,6 +384,27 @@ class Controller {
       res.send(error)
     }
   }
+
+  static async search(req, res) {
+    try {
+      const { keyword } = req.query;
+      if (keyword === '') {
+        res.redirect('/home');
+      } else {
+        let role = req.session.userRole;
+        const courses = await Course.findAll({
+          where: {
+            title: {
+              [Op.iLike]: `%${keyword}%`,
+            },
+          },
+        });
+        res.render('search', { role, courses });
+      }
+    } catch (error) {
+      res.send(error);
+    }
+  }
 }
 
 module.exports = Controller;
