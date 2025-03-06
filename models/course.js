@@ -19,10 +19,21 @@ module.exports = (sequelize, DataTypes) => {
       return Helper.currencyRupiah(this.price);
     }
 
-    static discount(amount) {
+    discount(amount) {
       const discountPercentage = amount / 100;
       const discountAmount = this.price * discountPercentage;
       return this.price - discountAmount;
+    }
+
+    static async findAffordableCourses(maxPrice) {
+      return await this.findAll({
+        where: {
+          price: {
+            [sequelize.Op.lte]: maxPrice, // harga <= maxPrice
+          },
+        },
+        order: [['price', 'ASC']], // urutkan dari harga termurah
+      });
     }
   }
   Course.init(
