@@ -23,7 +23,8 @@ router.use((req, res, next) => {
 router.get('/home', Controller.showHome);
 router.get('/home/profile', Controller.showProfile);
 router.get('/courses/detail/:id', Controller.courseDetail);
-router.get('/course/buy/:id', Controller.courseDetail);
+router.get('/course/buy/:id', Controller.buyCourse);
+router.get('/search', Controller.search);
 
 //cek hanya admin & instructor
 router.use((req, res, next) => {

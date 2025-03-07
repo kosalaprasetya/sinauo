@@ -2,12 +2,36 @@ const bcrypt = require('bcrypt');
 const { User, UserEnrollment, Course, CourseCategory, Category } = require('../models/index.js');
 const session = require('express-session');
 const { Op, where } = require('sequelize');
+const nodemailer = require('nodemailer')
+const QRCode = require('qrcode')
 
 class Controller {
   static async showHome(req, res) {
     try {
+      let {filter} = req.query
       let role = req.session.userRole;
-      let userData = await User.findByPk(req.session.userId, {
+
+      // let filteredData = await Course.findOne({
+      //   include: {
+      //     model: UserEnrollment,
+      //     include: {
+      //       model: Course,
+      //     },
+      //     where: {
+      //       id: req.session.userId
+      //     }
+      //   }
+        
+      // })
+
+      // console.log(filteredData.UserEnrollment.Course)
+
+      let categoryData = await Category.findAll()
+      categoryData = categoryData.map(el=>el.dataValues)
+      let userData = await User.findOne({
+        where: {
+          id: req.session.userId
+        },
         include: {
           model: UserEnrollment,
           include: {
@@ -15,9 +39,9 @@ class Controller {
           },
         },
       });
-      userData = userData.dataValues;
+
       const courses = await Course.findAll();
-      res.render('home', { role, userData, courses });
+      res.render('home', { role, userData, categoryData, courses });
     } catch (error) {
       res.send(error);
     }
@@ -47,7 +71,47 @@ class Controller {
 
   static async buyCourse(req, res) {
     try {
-    } catch (error) {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        service: 'gmail',
+        auth: {
+          user: 'bricongaw@gmail.com',  
+          pass: 'robd wzjv wqcx numn',
+        },
+      });
+
+      QRCode.toFile('qrcode.png', 'http://localhost:3001/', function (err) {
+        if (err) {
+          console.error('Error generating QR code:', err);
+        } else {
+          const mailOptions = {
+            from: '"Brandon" <bricongaw@gmail.com>',
+            to: 'bricongaw@gmail.com',
+            subject: 'noreply',
+            text: 'Scan the QR code below to complete your payment',
+            attachments: [
+              {
+                filename: 'qrcode.png',
+                path: './qrcode.png',
+              },
+            ],
+          };
+      
+          // Send email
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log('Error:', error);
+            } else {
+              console.log('Email sent:', info.response);
+            }
+          });
+        }
+      });
+      res.redirect('/home')
+    } 
+    catch (error) {
       res.send(error);
     }
   }
@@ -175,7 +239,6 @@ class Controller {
 
         res.redirect(`/home/manage/addStudent?errors=${message}&path=${path}`);
       } else {
-        console.log(error);
         res.send(error);
       }
     }
@@ -221,13 +284,10 @@ class Controller {
       let { id } = req.params;
       let role = req.session.userRole;
 
+      //promise chain?
       let user = await User.findByPk(+id);
       let name = user.name;
-      await User.destroy({
-        where: {
-          id: +id,
-        },
-      });
+      await user.destroy();
 
       res.redirect(`/home/manage?name=${name}`);
     } catch (error) {
@@ -247,7 +307,7 @@ class Controller {
 
   static async postInstructor(req, res) {
     try {
-      req.body.role = 'instructor';
+      req.body.role = 'instructor'
       await User.create(req.body);
 
       res.redirect('/home/manage/');
@@ -258,7 +318,6 @@ class Controller {
 
         res.redirect(`/home/manage/addInstructor?errors=${message}&path=${path}`);
       } else {
-        console.log(error);
         res.send(error);
       }
     }
@@ -306,11 +365,7 @@ class Controller {
 
       let user = await User.findByPk(+id);
       let name = user.name;
-      await User.destroy({
-        where: {
-          id: +id,
-        },
-      });
+      await user.destroy();
 
       res.redirect(`/home/manage?name=${name}`);
     } catch (error) {
@@ -318,12 +373,34 @@ class Controller {
     }
   }
 
-  static async showProfile(req, res) {
+  static async showProfile(req,res){
+    try{
+      let role = req.session.userRole
+      let data = await User.findByPk(req.session.userId)
+      data = data.dataValues
+      res.render('Profile', {data, role})
+    }
+    catch (error){
+      res.send(error)
+    }
+  }
+
+  static async search(req, res) {
     try {
-      let role = req.session.userRole;
-      let data = await User.findByPk(req.session.userId);
-      data = data.dataValues;
-      res.render('Profile', { data, role });
+      const { keyword } = req.query;
+      if (keyword === '') {
+        res.redirect('/home');
+      } else {
+        let role = req.session.userRole;
+        const courses = await Course.findAll({
+          where: {
+            title: {
+              [Op.iLike]: `%${keyword}%`,
+            },
+          },
+        });
+        res.render('search', { role, courses });
+      }
     } catch (error) {
       res.send(error);
     }

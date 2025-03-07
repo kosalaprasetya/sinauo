@@ -28,46 +28,14 @@
         class="nav-bar d-flex gap-3 py-3"
         style="overflow-x: auto; white-space: nowrap; justify-content: center"
       >
-        <a href="#"
-          ><button
-            class="btn btn-outline-primary"
-            style="border-radius: 20px"
-          >
-            Category 1
-          </button></a
-        >
-        <a href="#"
-          ><button
-            class="btn btn-outline-primary"
-            style="border-radius: 20px"
-          >
-            Category 2
-          </button></a
-        >
-        <a href="#"
-          ><button
-            class="btn btn-outline-primary"
-            style="border-radius: 20px"
-          >
-            Category 3
-          </button></a
-        >
-        <a href="#"
-          ><button
-            class="btn btn-outline-primary"
-            style="border-radius: 20px"
-          >
-            Category 4
-          </button></a
-        >
-        <a href="#"
-          ><button
-            class="btn btn-outline-primary"
-            style="border-radius: 20px"
-          >
-            Category 5
-          </button></a
-        >
+      <% categoryData.forEach(element => { %>
+        <a href="/home?filter=<%= element.id %>"><button
+          class="btn btn-outline-primary"
+          style="border-radius: 20px">
+          <%= element.name %>
+        </button></a>
+      <% }) %>
+        
       </nav>
 
       <h4>My Courses</h4>
